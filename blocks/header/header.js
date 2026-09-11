@@ -95,12 +95,18 @@ function addBackButton(panel, owner, label) {
 function decorateDrop(navSection, nav, index) {
   navSection.classList.add('nav-drop');
   navSection.setAttribute('aria-expanded', 'false');
-  // Unwrap the single-link <p> EDS emits so the trigger anchor is a direct
-  // child of the <li> (cleaner markup + recognizable as a menu trigger).
-  const triggerP = navSection.querySelector(':scope > p');
-  if (triggerP && triggerP.querySelector('a')) {
-    triggerP.replaceWith(...triggerP.childNodes);
-  }
+  // Unwrap every single-link <p> wrapper in this section so each anchor is a
+  // direct child of its <li>. Document Authoring wraps each link as `li > p > a`
+  // (local raw fragments use bare `li > a`); the trigger + drill-in parent logic
+  // below relies on `:scope > a`, which only matches when the <p> is removed.
+  // Without this, nested drill-in parents keep their <p> wrapper, get no click
+  // handler, and navigate away instead of opening their sub-panel.
+  navSection.querySelectorAll('p').forEach((p) => {
+    const links = p.querySelectorAll('a');
+    if (links.length === 1 && !p.textContent.replace(links[0].textContent, '').trim()) {
+      p.replaceWith(...p.childNodes);
+    }
+  });
   const trigger = navSection.querySelector(':scope > a');
   const panel = navSection.querySelector(':scope > ul');
 
