@@ -1,0 +1,10 @@
+{
+  "variantName": "cards-news",
+  "baseBlock": "cards",
+  "canonicalModel": "cards",
+  "visualCharacteristics": "Magenta-themed grid of news teaser cards, each with a category tag, image, heading, description and a 'Learn more' link.",
+  "contentPattern": "Repeating self-contained items: category label + image + title + text + CTA.",
+  "usage": "Latest news feed of teaser cards.",
+  "options": [],
+  "memberVariantIds": ["cards-news"]
+}

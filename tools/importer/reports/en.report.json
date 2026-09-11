@@ -1,0 +1,17 @@
+{
+  "status": "success",
+  "url": "https://www.telekom.com/en",
+  "path": "en",
+  "timestamp": "2026-09-10T15:25:59.393Z",
+  "title": "Home | Deutsche Telekom",
+  "template": "home",
+  "blocks": [
+    "hero-video",
+    "tabs-audience",
+    "cards-news",
+    "cards-news",
+    "cards-facts",
+    "carousel-topics",
+    "cards-events"
+  ]
+}

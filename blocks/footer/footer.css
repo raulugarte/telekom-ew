@@ -1,20 +1,171 @@
+/*
+ * Footer navigation — telekom.com/en
+ * Source: on the black page canvas. A brand/social row, four link groups, and a
+ * legal row. Desktop: groups are a 4-column row with lists always visible and
+ * static headings. Mobile: each group heading is an accordion toggle that
+ * expands/collapses its list; the legal row stays visible. Scoped to footer.
+ */
+
 footer {
-  background-color: var(--light-color);
-  font-size: var(--body-font-size-xs);
+  background-color: var(--color-dark, #000);
+  color: #fff;
+  font-size: var(--body-font-size-s);
 }
 
 footer .footer > div {
   margin: auto;
-  max-width: 1200px;
-  padding: 40px 24px 24px;
+  max-width: 1408px;
+  padding: 40px 16px 24px;
 }
 
 footer .footer p {
   margin: 0;
 }
 
+footer .footer a:any-link {
+  color: #fff;
+  text-decoration: none;
+}
+
+footer .footer a:hover {
+  color: var(--color-magenta);
+}
+
+/* --- brand + social --- */
+footer .footer-brand img {
+  width: 40px;
+  height: auto;
+  display: block;
+}
+
+footer .footer-social {
+  list-style: none;
+  margin: 12px 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+/* --- nav groups --- */
+footer .footer-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-top: 1px solid rgb(255 255 255 / 20%);
+}
+
+footer .footer-group {
+  border-bottom: 1px solid rgb(255 255 255 / 20%);
+}
+
+footer .footer-group h2,
+footer .footer-group h3,
+footer .footer-group h4 {
+  margin: 0;
+  font-size: var(--body-font-size-m);
+}
+
+/* Group heading toggle (accordion on mobile) */
+footer .footer-group-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  margin: 0;
+  padding: 16px 0;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-m);
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+}
+
+/* chevron on the toggle (points down collapsed, up expanded) */
+footer .footer-group-toggle::after {
+  content: '';
+  flex: 0 0 auto;
+  width: 8px;
+  height: 8px;
+  border: 2px solid currentcolor;
+  border-width: 2px 2px 0 0;
+  transform: rotate(135deg);
+  transition: transform 0.2s ease;
+}
+
+footer .footer-group-toggle[aria-expanded='true']::after {
+  transform: rotate(-45deg);
+}
+
+footer .footer-group ul {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Collapsed on mobile */
+footer .footer-group-toggle[aria-expanded='false'] + ul {
+  display: none;
+}
+
+/* --- legal / copyright row --- */
+footer .footer-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+footer .footer-legal {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+footer .footer-legal a {
+  font-size: var(--body-font-size-xs);
+}
+
+/* ===================== DESKTOP ===================== */
 @media (width >= 900px) {
   footer .footer > div {
-    padding: 40px 32px 24px;
+    padding: 48px 48px 24px;
+  }
+
+  /* Groups become a 4-column row; lists always visible; chevrons hidden. */
+  footer .footer-groups {
+    flex-direction: row;
+    gap: 48px;
+    border-top: 0;
+  }
+
+  footer .footer-group {
+    flex: 1 1 0;
+    border-bottom: 0;
+  }
+
+  footer .footer-group-toggle {
+    padding: 0 0 16px;
+    font-weight: 700;
+    cursor: default;
+  }
+
+  footer .footer-group-toggle::after {
+    content: none; /* no chevron on desktop */
+  }
+
+  /* Always show the lists on desktop regardless of aria-expanded. */
+  footer .footer-group-toggle + ul {
+    display: flex;
   }
 }

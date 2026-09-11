@@ -1,0 +1,11 @@
+{
+  "type": "da",
+  "sites": {
+    "telekom-ew": {
+      "previewOrg": "raulugarte",
+      "previewSite": "telekom-ew",
+      "contentHostUrl": "https://content.da.live/raulugarte/telekom-ew/",
+      "libraryUrl": "https://main--sta-boilerplate--aemdemos.aem.page/tools/sidekick/library.json"
+    }
+  }
+}

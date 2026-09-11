@@ -1,0 +1,195 @@
+/*
+ * cards-events -- "Upcoming events" list.
+ * Migrated from Telekom source `.events-teaser`.
+ * The section is a single charcoal (#202020) `.dark` band (see styles.css);
+ * the featured image sits in one column and the events are transparent rows
+ * stacked beside it — NOT individually boxed cards.
+ * Decorated DOM: .cards-events > ul > li
+ *   - first li  = featured image (.cards-events-card-image + empty body)
+ *   - other li  = event (.cards-events-card-date + .cards-events-card-body)
+ */
+
+.cards-events > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* --- featured image (first item) --- */
+.cards-events > ul > li:first-child {
+  padding: 0;
+  background: none;
+}
+
+.cards-events .cards-events-card-image {
+  line-height: 0;
+  border-radius: 24px;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+}
+
+.cards-events .cards-events-card-image picture,
+.cards-events .cards-events-card-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* --- event row (transparent on the section band, not a boxed card) --- */
+.cards-events > ul > li:not(:first-child) {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  color: #fff;
+}
+
+.cards-events .cards-events-card-date,
+.cards-events .cards-events-card-date p {
+  margin: 0;
+  color: #fff;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 31px;
+  white-space: nowrap;
+}
+
+.cards-events .cards-events-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* empty body cell that accompanies the image row */
+.cards-events > ul > li:first-child .cards-events-card-body:empty {
+  display: none;
+}
+
+.cards-events .cards-events-card-body h4 {
+  margin: 0;
+  color: #fff;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 31px;
+}
+
+.cards-events .cards-events-card-body h4 a:any-link {
+  color: #fff;
+}
+
+.cards-events .cards-events-card-body p {
+  margin: 0;
+  color: #fff;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 32px;
+}
+
+/* action link -- source renders a dark pill. EDS may leave it as a plain
+   standalone link (<p><a></a></p>) or decorate it as a.button; cover both. */
+.cards-events .cards-events-card-body p:has(> a:only-child) {
+  margin: 0;
+}
+
+main .cards-events .cards-events-card-body a.button:any-link,
+main .cards-events .cards-events-card-body p > a:only-child {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  margin: 0;
+  padding: 4px 20px;
+  border: 0;
+  border-radius: 999px;
+  background-color: rgb(65 65 65); /* #414141 */
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.25;
+  text-decoration: none;
+}
+
+main .cards-events .cards-events-card-body a.button:any-link:hover,
+main .cards-events .cards-events-card-body a.button:any-link:focus-visible,
+main .cards-events .cards-events-card-body p > a:only-child:hover,
+main .cards-events .cards-events-card-body p > a:only-child:focus-visible {
+  background-color: rgb(80 80 80);
+  color: #fff;
+  text-decoration: none;
+}
+
+/* Actions row: "More information" + "Add to calendar" side by side. */
+.cards-events .cards-events-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+/* "Add to calendar" — inert pill matching the source (icon + label). The
+   source is a JS widget button with no URL, so this is presentational.
+   Scoped under .cards-events-card-body to beat the generic paragraph rule. */
+.cards-events .cards-events-card-body p.cards-events-add-to-calendar {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  padding: 4px 20px;
+  border-radius: 999px;
+  background-color: rgb(65 65 65); /* #414141 */
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.cards-events .cards-events-card-body p.cards-events-add-to-calendar::before {
+  content: '';
+  width: 16px;
+  height: 16px;
+  background-color: currentcolor; /* calendar glyph mask below */
+  mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 2v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V2h-2v2H9V2H7zm12 6v12H5V8h14z"/></svg>') center / contain no-repeat;
+}
+
+@media (width >= 900px) {
+  /* two columns: featured image spans all rows, events stacked beside it */
+
+  /* Column 1 is reserved for the featured image, which is absolutely
+     positioned so it spans the full height of the stacked event cards
+     regardless of how many events the author added. */
+  .cards-events > ul {
+    position: relative;
+    display: grid;
+    grid-template-columns: 40% 1fr;
+    gap: 8px 48px;
+    grid-auto-rows: max-content;
+  }
+
+  .cards-events > ul > li:first-child {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 40%;
+  }
+
+  .cards-events .cards-events-card-image {
+    height: 100%;
+    aspect-ratio: auto;
+    border-radius: 32px;
+  }
+
+  .cards-events > ul > li:not(:first-child) {
+    grid-column: 2;
+    flex-direction: row;
+    gap: 48px;
+    align-items: flex-start;
+  }
+
+  .cards-events .cards-events-card-date {
+    flex: 0 0 144px;
+  }
+
+  .cards-events .cards-events-card-body {
+    flex: 1 1 0;
+  }
+}

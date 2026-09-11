@@ -1,0 +1,285 @@
+/*
+ * Tabs Audience — audience selector (dropdown variant)
+ * Design extracted from https://www.telekom.com/en
+ * (.personalisationselector .dropdown, the visible collapsed selector).
+ * The section wrapper carries the .dark theme (black bg, white text).
+ *
+ * Source design: a single full-width rounded dark bar (#202020, 999px radius)
+ * showing only the active audience with a chevron. Clicking expands a listbox
+ * of the other audiences. The active audience's trailing keyword is magenta.
+ */
+
+/* Disclosure control wrapper */
+.tabs-audience .tabs-audience-select {
+  position: relative;
+  width: 100%;
+}
+
+/* Collapsed trigger bar (source .dropdown__trigger) */
+.tabs-audience .tabs-audience-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  min-height: 64px;
+  margin: 0;
+  padding: 16px 32px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background-color: #202020;
+  color: #fff;
+  font-family: var(--heading-font-family);
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 22px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.tabs-audience .tabs-audience-trigger:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+.tabs-audience .tabs-audience-value {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* Trailing keyword highlighted in Telekom magenta (source .dropdown__option-highlight).
+ * Only the collapsed value and the selected option are highlighted; other options
+ * render fully white. */
+.tabs-audience .tabs-audience-value .tabs-audience-keyword {
+  color: var(--link-color);
+}
+
+/* Chevron (source .dropdown__icon) */
+.tabs-audience .tabs-audience-chevron {
+  flex: 0 0 auto;
+  width: 32px;
+  height: 32px;
+  color: #fff;
+  transition: transform 0.2s ease;
+}
+
+.tabs-audience .tabs-audience-trigger[aria-expanded='true'] .tabs-audience-chevron {
+  transform: rotate(180deg);
+}
+
+/* Expanded options list (source .dropdown__list [role=listbox]) */
+.tabs-audience .tabs-audience-list {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 20;
+  width: 100%;
+  margin: 0;
+  padding: 12px 0;
+  border-radius: 32px;
+  background-color: #202020;
+  list-style: none;
+}
+
+.tabs-audience .tabs-audience-list[hidden] {
+  display: none;
+}
+
+/* Options */
+.tabs-audience .tabs-audience-option {
+  margin: 0;
+  padding: 12px 32px;
+  color: #fff;
+  font-family: var(--heading-font-family);
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 22px;
+  cursor: pointer;
+}
+
+.tabs-audience .tabs-audience-option:hover,
+.tabs-audience .tabs-audience-option:focus-visible {
+  background-color: rgb(255 255 255 / 10%);
+  outline: none;
+}
+
+.tabs-audience .tabs-audience-option[aria-selected='true'] .tabs-audience-keyword {
+  color: var(--link-color);
+}
+
+/* Panels — the active panel is a macaw-blue rounded band wrapping the cards
+   (source paints #84b0f5 behind the teasers with ~48px padding). */
+.tabs-audience .tabs-audience-panel {
+  margin-top: 8px;
+  padding: 24px;
+  border-radius: 32px;
+  background-color: var(--color-macaw); /* #84b0f5 */
+}
+
+.tabs-audience .tabs-audience-panel[aria-hidden='true'] {
+  display: none;
+}
+
+/* Teaser list inside a panel (grid, 2 columns on desktop) */
+.tabs-audience .tabs-audience-panel ul {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px; /* source list gap */
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/*
+ * Teaser cards. Source renders each teaser as a white rounded "island" card on
+ * the dark section: image on top (16/9, rounded via overflow), a dark card body
+ * below with a bold heading, description, and a 64px circular grey arrow CTA.
+ * Values mirror the cards-news block for visual consistency.
+ * Our authored DOM per li: h3>a (title), p (description), p>a (CTA — often
+ * empty), p>a>picture (image, last). We keep the DOM order but pull the image
+ * to the top with `order`.
+ */
+.tabs-audience .tabs-audience-panel ul > li {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: #fff;
+  color: #000;
+  border-radius: 24px;
+}
+
+/* Dark-section link reset: card links are dark on white. */
+.tabs-audience .tabs-audience-panel ul > li a {
+  color: #000;
+}
+
+/* Image paragraph → top of the card, full-bleed 16/9 cover. */
+.tabs-audience .tabs-audience-panel ul > li > p:has(picture),
+.tabs-audience .tabs-audience-panel ul > li > p:has(img) {
+  order: -1;
+  margin: 0;
+  line-height: 0;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.tabs-audience .tabs-audience-panel ul > li > p:has(picture) a,
+.tabs-audience .tabs-audience-panel ul > li > p:has(img) a {
+  display: block;
+  font-size: 0;         /* hide any stray anchor text; keep the picture */
+  line-height: 0;
+}
+
+.tabs-audience .tabs-audience-panel ul > li picture {
+  display: block;
+}
+
+.tabs-audience .tabs-audience-panel ul > li img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 24px; /* source: image is a fully-rounded rect */
+  object-fit: cover;
+}
+
+/* Heading. */
+.tabs-audience .tabs-audience-panel ul > li h3 {
+  margin: 24px 24px 0;
+  font-family: var(--heading-font-family);
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.125;
+  color: #000;
+}
+
+.tabs-audience .tabs-audience-panel ul > li h3 a:any-link {
+  color: #000;
+  text-decoration: none;
+}
+
+/* Description paragraph (no link). */
+.tabs-audience .tabs-audience-panel ul > li > p:not(:has(a)) {
+  margin: 16px 24px 0;
+  font-family: var(--body-font-family);
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.33;
+  color: #000;
+}
+
+/* Trailing CTA paragraph → 64px circular grey arrow button. */
+.tabs-audience .tabs-audience-panel ul > li > p:has(> a):not(:has(picture), :has(img)) {
+  margin: 24px;
+}
+
+.tabs-audience .tabs-audience-panel ul > li > p:has(> a):not(:has(picture), :has(img)) a:any-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  padding: 0;
+  border-radius: 999px;
+  background-color: #f1f1f1;
+  color: #000;
+  font-size: 0;         /* hide raw link text; arrow rendered via ::after */
+  line-height: 0;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.tabs-audience .tabs-audience-panel ul > li > p:has(> a):not(:has(picture), :has(img)) a:any-link::after {
+  content: "→";
+  font-size: 24px;
+  line-height: 1;
+  color: #000;
+}
+
+.tabs-audience .tabs-audience-panel ul > li > p:has(> a):not(:has(picture), :has(img)) a:hover {
+  background-color: #dadada;
+  text-decoration: none;
+}
+
+@media (width >= 900px) {
+  .tabs-audience .tabs-audience-trigger {
+    min-height: 120px;
+    padding: 24px 64px;
+    font-size: 56px;
+    line-height: 62px;
+  }
+
+  .tabs-audience .tabs-audience-chevron {
+    width: 48px;
+    height: 48px;
+  }
+
+  .tabs-audience .tabs-audience-list {
+    padding: 16px 0;
+  }
+
+  .tabs-audience .tabs-audience-option {
+    padding: 12px 64px;
+    font-size: 40px;
+  }
+
+  .tabs-audience .tabs-audience-panel {
+    padding: 48px; /* source blue-band inset around the cards */
+  }
+
+  .tabs-audience .tabs-audience-panel ul {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .tabs-audience .tabs-audience-panel ul > li h3 {
+    margin: 32px 32px 0;
+    font-size: 32px;
+  }
+
+  .tabs-audience .tabs-audience-panel ul > li > p:not(:has(a)) {
+    margin: 16px 32px 0;
+    font-size: 24px;
+  }
+
+  .tabs-audience .tabs-audience-panel ul > li > p:has(> a):not(:has(picture), :has(img)) {
+    margin: 24px 32px 32px;
+  }
+}

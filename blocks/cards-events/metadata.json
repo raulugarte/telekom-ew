@@ -1,0 +1,10 @@
+{
+  "variantName": "cards-events",
+  "baseBlock": "cards",
+  "canonicalModel": "cards",
+  "visualCharacteristics": "Orchid-themed list of dated event items, each with a date column, title, description and calendar/info actions.",
+  "contentPattern": "Repeating structured event items: date + title + description + CTAs.",
+  "usage": "Upcoming events list.",
+  "options": [],
+  "memberVariantIds": ["cards-events"]
+}

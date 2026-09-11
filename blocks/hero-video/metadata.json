@@ -1,0 +1,10 @@
+{
+  "variantName": "hero-video",
+  "baseBlock": "hero",
+  "canonicalModel": "standalone",
+  "visualCharacteristics": "Full-bleed, dark-themed hero. A background video (or image fallback) fills the section; a large H1 headline is overlaid, aligned toward the lower portion of the stage.",
+  "contentPattern": "A link to a background video file plus a heading/copy cell that overlays the media.",
+  "usage": "Prominent full-width intro banner with background video and heading.",
+  "options": [],
+  "memberVariantIds": ["hero-video"]
+}

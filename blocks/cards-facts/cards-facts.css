@@ -1,0 +1,131 @@
+/*
+ * Cards Facts — a vertical stack of statistics on the section's dark band.
+ * Source: the whole section is one #202020 card (handled by the .dark section
+ * theme); each stat is a transparent row — a large figure alongside a label +
+ * description. Values extracted from telekom.com/en (.facts). Scoped to
+ * .cards-facts.
+ */
+
+.cards-facts > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 32px; /* source: 48px on desktop, tighter on mobile */
+}
+
+/* --- Stat item ---
+ * Source: each stat is a transparent row sitting directly on the section's
+ * #202020 band — NOT an individual card. No background/radius/padding here. */
+.cards-facts > ul > li {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* --- Figure (prominent number/stat) --- */
+.cards-facts-figure {
+  display: flex;
+  align-items: center;
+}
+
+.cards-facts-figure :is(h1, h2, h3, h4, h5, h6) {
+  margin: 0;
+  font-family: var(--heading-font-family);
+  font-weight: 400;
+  font-size: 64px;
+  line-height: 48px;
+  color: #fff;
+}
+
+/* --- Text (label + description) --- */
+.cards-facts-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.cards-facts-text p {
+  margin: 0;
+  font-size: var(--body-font-size-s);
+  font-weight: 500;
+  line-height: 21px;
+  color: #fff;
+}
+
+/* Bold label (first paragraph carries <strong>) */
+.cards-facts-text p strong {
+  font-weight: 500;
+}
+
+.cards-facts-text p:first-child {
+  font-size: var(--heading-font-size-l);
+  line-height: 32px;
+}
+
+/* --- Collapsible items (all but the first live share-price stat) ---
+ * The bold label becomes a full-width disclosure toggle with a chevron; the
+ * description is collapsed until expanded, mirroring the source. */
+.cards-facts-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #fff;
+  font-family: var(--body-font-family);
+  font-size: var(--heading-font-size-l);
+  font-weight: 500;
+  line-height: 32px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.cards-facts-chevron {
+  flex: 0 0 auto;
+  transition: transform 0.2s ease;
+}
+
+.cards-facts-toggle[aria-expanded='true'] .cards-facts-chevron {
+  transform: rotate(180deg);
+}
+
+.cards-facts-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.cards-facts-detail[hidden] {
+  display: none;
+}
+
+@media (width >= 900px) {
+  .cards-facts > ul {
+    gap: 48px; /* source inter-stat gap */
+  }
+
+  .cards-facts > ul > li {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    column-gap: 48px;
+  }
+
+  .cards-facts-figure :is(h1, h2, h3, h4, h5, h6) {
+    font-size: 144px;
+    line-height: 120px;
+  }
+}
+
+/* Keep the toggle's bold label at the source's medium weight (not <strong>'s
+   default bold). Placed last to satisfy descending-specificity ordering. */
+.cards-facts .cards-facts-toggle strong {
+  font-weight: 500;
+}
