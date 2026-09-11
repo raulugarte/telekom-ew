@@ -1,0 +1,188 @@
+/* Block: cards-news — "Latest news" teaser grid on magenta background.
+ * Values extracted from https://www.telekom.com/en (.teaser-group__grid).
+ * The section wrapper carries the .magenta theme; cards are white "islands".
+ */
+
+/* --- Grid ------------------------------------------------------------- */
+.cards-news > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+/* --- Card ------------------------------------------------------------- */
+.cards-news > ul > li {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  color: #000;
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+/* Reset the magenta-theme link colour: card links are dark on white. */
+.cards-news > ul > li a:any-link,
+.cards-news > ul > li a:hover {
+  color: #000;
+}
+
+/* --- Image ------------------------------------------------------------ */
+.cards-news .cards-news-card-image {
+  line-height: 0;
+}
+
+.cards-news .cards-news-card-image img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 24px; /* source: image is a fully-rounded rect inside the card */
+  object-fit: cover;
+}
+
+/* --- Body ------------------------------------------------------------- */
+.cards-news .cards-news-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+}
+
+/* Optional category label (author may add as first cell text). */
+.cards-news .cards-news-card-body .cards-news-label {
+  align-self: flex-start;
+  margin: 0;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background-color: #f1f1f1;
+  color: #000;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 21px;
+}
+
+.cards-news .cards-news-card-body h3 {
+  margin: 0;
+  font-family: var(--heading-font-family);
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.125;
+  color: #000;
+}
+
+.cards-news .cards-news-card-body h3 a:any-link {
+  color: #000;
+  text-decoration: none;
+}
+
+.cards-news .cards-news-card-body p {
+  margin: 0;
+  font-family: var(--body-font-family);
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.33;
+  color: #000;
+}
+
+/* --- "Learn more" CTA: circular grey arrow button --------------------- */
+.cards-news .cards-news-card-body p:last-child {
+  margin-top: 8px;
+}
+
+.cards-news .cards-news-card-body p:last-child a:any-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  padding: 0;
+  border-radius: 999px;
+  background-color: #f1f1f1;
+  color: #000;
+  font-size: 0;           /* hide the visible label; keep it for a11y */
+  line-height: 0;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.cards-news .cards-news-card-body p:last-child a:any-link::after {
+  content: "→";
+  font-size: 24px;
+  line-height: 1;
+  color: #000;
+}
+
+.cards-news .cards-news-card-body p:last-child a:hover {
+  background-color: #dadada;
+  text-decoration: none;
+}
+
+/* --- Section header (default content: heading + "Visit the newsroom") ------
+ * Source lays the heading and the newsroom link on one row (space-between),
+ * with the link rendered as a white pill button. Scoped to the cards-news
+ * section so it only affects this section's default-content header.
+ */
+.section.cards-news-container .default-content-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.section.cards-news-container .default-content-wrapper h2 {
+  margin: 0;
+  font-size: var(--heading-font-size-xxl);
+  font-weight: 900;
+}
+
+.section.cards-news-container .default-content-wrapper p {
+  margin: 0;
+}
+
+/* "Visit the newsroom" → white pill button (source: white bg, black text). */
+.section.cards-news-container .default-content-wrapper p a:any-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 12px 32px;
+  border-radius: 999px;
+  background-color: #fff;
+  color: #000;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.section.cards-news-container .default-content-wrapper p a:hover {
+  background-color: var(--color-grey);
+  color: #000;
+  text-decoration: none;
+}
+
+/* --- Responsive ------------------------------------------------------- */
+@media (width >= 600px) {
+  .cards-news > ul {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (width >= 900px) {
+  .cards-news > ul {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .cards-news .cards-news-card-body {
+    padding: 32px;
+  }
+
+  .cards-news .cards-news-card-body h3 {
+    font-size: 32px;
+    line-height: 1.125;
+  }
+
+  .cards-news .cards-news-card-body p {
+    font-size: 24px;
+    line-height: 1.33;
+  }
+}

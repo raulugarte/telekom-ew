@@ -1,0 +1,150 @@
+{
+  "metadata": {
+    "projectType": "da"
+  },
+  "templates": [
+    {
+      "name": "home",
+      "urls": [
+        "https://www.telekom.com/en"
+      ],
+      "representativeUrl": "https://www.telekom.com/en",
+      "description": "Deutsche Telekom corporate homepage",
+      "urlPattern": "/*",
+      "blocks": [
+        {
+          "name": "hero-video",
+          "instances": [
+            ".stagevideo"
+          ]
+        },
+        {
+          "name": "tabs-audience",
+          "instances": [
+            ".personalisationselector .tabs.cmp-tabs"
+          ]
+        },
+        {
+          "name": "cards-news",
+          "instances": [
+            ".feed-outer .teaser-group__grid",
+            ".feed-outer section.feed.teaser-group"
+          ]
+        },
+        {
+          "name": "cards-facts",
+          "instances": [
+            ".facts-outer .facts"
+          ]
+        },
+        {
+          "name": "carousel-topics",
+          "instances": [
+            ".teasergroupslider.theme-orchid section.teaser-group"
+          ]
+        },
+        {
+          "name": "cards-events",
+          "instances": [
+            ".events-teaser"
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "id": "s1",
+          "name": "Hero video stage",
+          "selector": [
+            ".stagevideo"
+          ],
+          "style": "dark",
+          "blocks": [
+            "hero-video"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "s2",
+          "name": "Personalisation selector (audience tabs)",
+          "selector": [
+            ".personalisationselector"
+          ],
+          "style": "dark",
+          "blocks": [
+            "tabs-audience"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "s3",
+          "name": "Latest news feed",
+          "selector": [
+            ".feed-outer"
+          ],
+          "style": "magenta",
+          "blocks": [
+            "cards-news"
+          ],
+          "defaultContent": [
+            "h2",
+            "h3"
+          ]
+        },
+        {
+          "id": "s4",
+          "name": "Facts about Telekom",
+          "selector": [
+            ".facts-outer"
+          ],
+          "style": "dark",
+          "blocks": [
+            "cards-facts"
+          ],
+          "defaultContent": [
+            "h2"
+          ]
+        },
+        {
+          "id": "s5",
+          "name": "Topics to explore (teaser slider)",
+          "selector": [
+            ".teasergroupslider.theme-orchid"
+          ],
+          "style": "orchid",
+          "blocks": [
+            "carousel-topics"
+          ],
+          "defaultContent": [
+            "h2"
+          ]
+        },
+        {
+          "id": "s6",
+          "name": "Upcoming events",
+          "selector": [
+            ".events-teaser"
+          ],
+          "style": "dark",
+          "blocks": [
+            "cards-events"
+          ],
+          "defaultContent": [
+            "h2"
+          ]
+        },
+        {
+          "id": "s7",
+          "name": "Brand claim",
+          "selector": [
+            ".claim-outer"
+          ],
+          "style": "magenta",
+          "blocks": [],
+          "defaultContent": [
+            ".claim"
+          ]
+        }
+      ]
+    }
+  ]
+}

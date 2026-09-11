@@ -1,52 +1,42 @@
-/* header and nav layout */
-header .nav-wrapper {
-  background-color: var(--background-color);
-  width: 100%;
-  z-index: 2;
-  position: fixed;
+/*
+ * Header / primary navigation — telekom.com/en
+ * Source: a transparent bar over the page content (96px tall on desktop): the
+ * magenta Telekom 'T' logo (left) + 5 primary items (left), a Deutsch language
+ * toggle + search icon (right). Each primary item opens a full-width dark
+ * (#202020) megamenu that drops below the bar with rounded bottom corners; a
+ * single link column that reveals adjacent child columns as parents are opened.
+ * Scoped to header / .nav-*.
+ */
+
+/* styles.css caps `header { height: var(--nav-height) }` (64px). The floating
+   pill is taller (pill height + top/bottom inset), so the header must reserve
+   that full space or the hero below slides under the pill. */
+header {
+  height: calc(var(--nav-height) + 16px); /* mobile: 64 pill + 8px top/bottom */
 }
 
+header .nav-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 20;
+  background-color: transparent;
+}
+
+/* Mobile: the bar is a floating dark pill (source: #202020, 999px radius, 8px
+ * inset), logo badge on the left, search + hamburger on the right. */
 header nav {
   box-sizing: border-box;
-  display: grid;
-  grid-template:
-    'hamburger brand tools' var(--nav-height)
-    'sections sections sections' 1fr / auto 1fr auto;
+  display: flex;
   align-items: center;
-  gap: 0 24px;
-  margin: auto;
-  max-width: 1248px;
+  gap: 12px;
+  margin: 8px;
   height: var(--nav-height);
-  padding: 0 24px;
+  padding: 0 12px;
+  background-color: #202020;
+  border-radius: 999px;
   font-family: var(--body-font-family);
-}
-
-header nav[aria-expanded='true'] {
-  grid-template:
-    'hamburger brand' var(--nav-height)
-    'sections sections' 1fr
-    'tools tools' var(--nav-height) / auto 1fr;
-  overflow-y: auto;
-  min-height: 100dvh;
-}
-
-@media (width >= 900px) {
-  header .nav-wrapper {
-    position: relative;
-  }
-
-  header nav {
-    display: flex;
-    justify-content: space-between;
-    gap: 0 32px;
-    max-width: 1264px;
-    padding: 0 32px;
-  }
-
-  header nav[aria-expanded='true'] {
-    min-height: 0;
-    overflow: visible;
-  }
+  color: #fff;
 }
 
 header nav p {
@@ -56,14 +46,45 @@ header nav p {
 
 header nav a:any-link {
   color: currentcolor;
+  text-decoration: none;
 }
 
-/* hamburger */
-header nav .nav-hamburger {
-  grid-area: hamburger;
-  height: 22px;
+/* --- brand / logo ---
+ * Mobile: a magenta circle badge (source: 40px, #e20074, 999px) with a white
+ * 'T' inside. Desktop overrides this to a bare magenta 'T' (no badge). */
+header .nav-brand {
+  order: 1; /* leftmost on the mobile bar */
   display: flex;
   align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 40px;
+  height: 40px;
+  background-color: var(--color-magenta);
+  border-radius: 999px;
+}
+
+header .nav-brand .button-container,
+header .nav-brand p {
+  margin: 0;
+  display: flex;
+}
+
+header nav .nav-brand img {
+  width: 18px;
+  height: auto;
+  display: block;
+  filter: brightness(0) invert(1); /* white 'T' on the magenta badge */
+}
+
+/* --- hamburger (mobile only) --- */
+header nav .nav-hamburger {
+  order: 3; /* rightmost on the mobile bar */
+  height: 40px;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 header nav .nav-hamburger button {
@@ -72,11 +93,9 @@ header nav .nav-hamburger button {
   border: 0;
   border-radius: 0;
   padding: 0;
-  background-color: var(--background-color);
+  background: transparent;
   color: inherit;
-  overflow: initial;
-  text-overflow: initial;
-  white-space: initial;
+  cursor: pointer;
 }
 
 header nav .nav-hamburger-icon,
@@ -85,188 +104,583 @@ header nav .nav-hamburger-icon::after {
   box-sizing: border-box;
   display: block;
   position: relative;
-  width: 20px;
+  width: 22px;
+  height: 2px;
+  border-radius: 2px;
+  background: currentcolor;
 }
 
 header nav .nav-hamburger-icon::before,
 header nav .nav-hamburger-icon::after {
   content: '';
   position: absolute;
-  background: currentcolor;
 }
 
-header nav[aria-expanded='false'] .nav-hamburger-icon,
-header nav[aria-expanded='false'] .nav-hamburger-icon::before,
-header nav[aria-expanded='false'] .nav-hamburger-icon::after {
-  height: 2px;
-  border-radius: 2px;
-  background: currentcolor;
-}
-
-header nav[aria-expanded='false'] .nav-hamburger-icon::before {
-  top: -6px;
-}
-
-header nav[aria-expanded='false'] .nav-hamburger-icon::after {
-  top: 6px;
-}
+header nav .nav-hamburger-icon::before { top: -7px; }
+header nav .nav-hamburger-icon::after { top: 7px; }
 
 header nav[aria-expanded='true'] .nav-hamburger-icon {
-  height: 22px;
+  background: transparent;
 }
 
-header nav[aria-expanded='true'] .nav-hamburger-icon::before,
-header nav[aria-expanded='true'] .nav-hamburger-icon::after {
-  top: 3px;
-  left: 1px;
+header nav[aria-expanded='true'] .nav-hamburger-icon::before {
+  top: 0;
   transform: rotate(45deg);
-  transform-origin: 2px 1px;
-  width: 24px;
-  height: 2px;
-  border-radius: 2px;
 }
 
 header nav[aria-expanded='true'] .nav-hamburger-icon::after {
-  top: unset;
-  bottom: 3px;
+  top: 0;
   transform: rotate(-45deg);
 }
 
-@media (width >= 900px) {
-  header nav .nav-hamburger {
-    display: none;
-    visibility: hidden;
-  }
-}
-
-/* brand */
-header .nav-brand {
-  grid-area: brand;
-  flex-basis: 128px;
-  font-size: var(--heading-font-size-s);
-  font-weight: 700;
-  line-height: 1;
-}
-
-header nav .nav-brand img {
-  width: 128px;
-  height: auto;
-}
-
-/* sections */
+/* --- sections (primary nav) ---
+ * Mobile: a full-screen dark drawer that slides down below the header when the
+ * hamburger is tapped. Sub-menus are slide-in panels (translateX) with a back
+ * control, mirroring telekom.com's mobile drawer. */
 header nav .nav-sections {
-  grid-area: sections;
-  flex: 1 1 auto;
-  display: none;
+  position: fixed;
+  inset: calc(var(--nav-height) + 16px) 0 0;
+  background-color: #202020;
+  overflow: hidden auto;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
   visibility: hidden;
 }
 
 header nav[aria-expanded='true'] .nav-sections {
-  display: block;
+  transform: translateX(0);
   visibility: visible;
-  align-self: start;
 }
 
 header nav .nav-sections ul {
   list-style: none;
-  padding-left: 0;
-  font-size: var(--body-font-size-s);
+  margin: 0;
+  padding: 0;
 }
 
-header nav .nav-sections ul > li {
+/* Top-level rows: full-width flush; horizontal inset lives on the link so rows
+ * span edge-to-edge (matches source full-width-flush layout). */
+header nav .nav-sections .default-content-wrapper > ul {
+  padding: 8px 0 24px;
+}
+
+header nav .nav-sections .default-content-wrapper > ul > li {
+  border-bottom: 1px solid rgb(255 255 255 / 12%);
+}
+
+header nav .nav-sections .default-content-wrapper > ul > li > a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 20px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+}
+
+/* Chevron on rows that open a sub-panel */
+header nav .nav-sections .nav-drop > a::after,
+header nav .nav-sections .nav-drop-parent > a::after {
+  content: '';
+  flex: 0 0 auto;
+  width: 8px;
+  height: 8px;
+  border: 2px solid currentcolor;
+  border-width: 2px 2px 0 0;
+  transform: rotate(45deg);
+}
+
+/* Sub-panels: slide in from the right over the drawer. Closed panels are
+ * display:none (removed from layout) so they neither intercept taps nor get
+ * mis-measured; open panels animate in from the right. */
+header nav .nav-sections .nav-drop > ul,
+header nav .nav-sections .nav-drop-parent > ul {
+  display: none;
+  position: fixed;
+  inset: calc(var(--nav-height) + 16px) 0 0;
+  background-color: #202020;
+  padding: 8px 0 24px;
+  overflow-y: auto;
+}
+
+header nav .nav-sections .nav-drop[aria-expanded='true'] > ul,
+header nav .nav-sections .nav-drop-parent[aria-expanded='true'] > ul {
+  display: block;
+  animation: nav-slide-in 0.3s ease;
+}
+
+@keyframes nav-slide-in {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+header nav .nav-sections .nav-drop > ul > li,
+header nav .nav-sections .nav-drop-parent > ul > li {
+  border-bottom: 1px solid rgb(255 255 255 / 12%);
+}
+
+/* stylelint-disable no-descending-specificity */
+header nav .nav-sections .nav-drop > ul a,
+header nav .nav-sections .nav-drop-parent > ul a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 20px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+}
+/* stylelint-enable no-descending-specificity */
+
+/* "Close Menu" control is desktop-only (mobile uses the back buttons). */
+header nav .nav-close {
+  display: none;
+}
+
+/* Mobile back control */
+header nav .nav-back {
+  border-bottom: 1px solid rgb(255 255 255 / 12%);
+}
+
+header nav .nav-back-button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  margin: 0;
+  padding: 13px 20px;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  font-family: var(--body-font-family);
+  font-size: 18px;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+}
+
+header nav .nav-back-button::before {
+  content: '';
+  flex: 0 0 auto;
+  width: 8px;
+  height: 8px;
+  border: 2px solid currentcolor;
+  border-width: 2px 2px 0 0;
+  transform: rotate(-135deg);
+}
+
+/* --- tools (search on mobile; language + search on desktop) --- */
+header nav .nav-tools {
+  order: 2; /* pushed to the right, before the hamburger */
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-left: auto;
+}
+
+header nav .nav-tools p {
+  display: flex;
+  align-items: center;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+header nav .nav-tools a {
+  font-size: var(--body-font-size-s);
   font-weight: 500;
 }
 
-header nav .nav-sections ul > li > ul {
-  margin-top: 0;
+header nav .nav-search {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
 }
 
-header nav .nav-sections ul > li > ul > li {
-  font-weight: 400;
+header nav .nav-search .icon-search {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
+header nav .nav-search .icon-search img,
+header nav .nav-search .icon-search svg {
+  width: 24px;
+  height: 24px;
+  filter: brightness(0) invert(1); /* render the search glyph white over content */
+}
+
+/* --- expandable search field (opens from the search icon) --- */
+header nav .nav-search-panel {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  background-color: #202020;
+  border-radius: 999px;
+}
+
+header nav .nav-search-panel[hidden] {
+  display: none;
+}
+
+header nav .nav-search-form {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+header nav .nav-search-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 48px;
+  padding: 0 16px;
+  border: 0;
+  border-bottom: 2px solid rgb(255 255 255 / 40%);
+  background: transparent;
+  color: #fff;
+  font-family: var(--body-font-family);
+  font-size: 20px;
+}
+
+header nav .nav-search-input::placeholder {
+  color: rgb(255 255 255 / 60%);
+}
+
+header nav .nav-search-input:focus {
+  outline: none;
+  border-bottom-color: var(--color-magenta);
+}
+
+header nav .nav-search-submit,
+header nav .nav-search-close {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+}
+
+header nav .nav-search-submit .icon-search img,
+header nav .nav-search-submit .icon-search svg {
+  width: 24px;
+  height: 24px;
+  filter: brightness(0) invert(1);
+}
+
+/* close (×) icon drawn with currentColor */
+header nav .nav-search-close-icon {
+  width: 20px;
+  height: 20px;
+  background: currentcolor;
+  mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke="black" stroke-width="2" fill="none"/></svg>') center / contain no-repeat;
+}
+
+/* ===================== DESKTOP ===================== */
 @media (width >= 900px) {
-  header nav .nav-sections {
-    display: block;
-    visibility: visible;
-    white-space: nowrap;
-  }
+  /* Reserve the full pill height (96px + 17px top/bottom inset) so the hero
+     below the header does not slide under the floating pill. */
+  header { height: calc(96px + 34px); }
 
-  header nav[aria-expanded='true'] .nav-sections {
-    align-self: unset;
-  }
-
-  header nav .nav-sections .nav-drop {
-    position: relative;
-    padding-right: 16px;
-    cursor: pointer;
-  }
-
-  header nav .nav-sections .nav-drop::after {
-    content: '';
-    display: inline-block;
-    position: absolute;
-    top: 0.5em;
-    right: 2px;
-    transform: rotate(135deg);
-    width: 6px;
-    height: 6px;
-    border: 2px solid currentcolor;
-    border-radius: 0 1px 0 0;
-    border-width: 2px 2px 0 0;
-  }
-
-  header nav .nav-sections .nav-drop[aria-expanded='true']::after {
-    top: unset;
-    bottom: 0.5em;
-    transform: rotate(315deg);
-  }
-
-  header nav .nav-sections ul {
+  /* Desktop is the SAME floating dark pill as mobile, just taller (96px) with
+     the primary nav visible inline. Width matches the hero-video / themed
+     cards: 1504px outer, inset 16px from the edges, centered once there's room. */
+  header nav {
     display: flex;
-    gap: 24px;
-    margin: 0;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0 32px;
+    height: 96px;
+    margin: 17px 16px;
+    max-width: calc(1408px + 96px); /* = hero / card outer width (1504px) */
+    padding: 0 8px 0 20px;
+    background-color: #202020;
+    border-radius: 999px;
+    color: #fff;
+  }
+
+  /* Desktop logo: larger 80px magenta circle badge with the white 'T'. */
+  header .nav-brand {
+    order: 1;
+    width: 80px;
+    height: 80px;
+  }
+
+  header nav .nav-brand img {
+    width: 40px;
+    filter: brightness(0) invert(1); /* white 'T' on the magenta badge */
+  }
+
+  /* Tools (globe + search) at the far right of the pill. */
+  header nav .nav-tools {
+    order: 3;
+    gap: 4px;
+    margin-left: auto;
+  }
+
+  /* Language switch renders as a globe icon (source), not the 'Deutsch' text. */
+  header nav .nav-tools .nav-language {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    font-size: 0; /* hide the text label */
+  }
+
+  header nav .nav-tools .nav-language::before {
+    content: '';
+    width: 24px;
+    height: 24px;
+    background: currentcolor;
+    mask: url('/icons/globe.svg') center / contain no-repeat;
+  }
+
+  header nav .nav-hamburger { display: none; }
+
+  /* Reset the mobile drawer: desktop nav is inline in the bar. */
+  header nav .nav-sections {
+    order: 2; /* right after the logo badge */
+    position: static;
+    inset: auto;
+    flex: 0 1 auto;
+    background: transparent;
+    overflow: visible;
+    transform: none;
+    visibility: visible;
+  }
+
+  /* Mobile-only back controls are hidden on desktop. */
+  header nav .nav-back { display: none; }
+
+  /* No row chevron on the top-level desktop items. */
+  header nav .nav-sections .nav-drop > a::after { content: none; }
+
+  header nav .nav-sections .default-content-wrapper > ul {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* source: 8px between items; spacing comes from item padding */
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li {
-    flex: 0 1 auto;
-    position: relative;
+    position: static; /* panels span the full header width */
+    border-bottom: 0; /* no row borders on desktop */
   }
 
+  header nav .nav-sections .default-content-wrapper > ul > li > a {
+    display: inline-flex;
+    align-items: center;
+    height: 48px; /* pill-shaped hit area, vertically centered in the 96px bar */
+    padding: 0 24px; /* source item padding */
+    border-radius: 999px;
+    font-size: 24px;
+    font-weight: 700;
+    color: #fff;
+    white-space: nowrap;
+    transition: background-color 0.15s ease, color 0.15s ease;
+  }
+
+  /* Hover: white rounded pill highlight (source behavior). */
+  /* stylelint-disable no-descending-specificity */
+  header nav .nav-sections .default-content-wrapper > ul > li > a:hover {
+    background-color: #fff;
+    color: #000;
+  }
+
+  /* Active / open item: magenta pill (source active-state). Declared after the
+     white hover rule and also covering :hover so the open item stays magenta
+     even while the pointer is over it. */
+  header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='true'] > a,
+  header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='true'] > a:hover {
+    background-color: var(--color-magenta);
+    color: #fff;
+  }
+  /* stylelint-enable no-descending-specificity */
+
+  /* megamenu panel: the nested <ul> under each top-level item.
+     Source: drops ~17px below the 96px header (top 113) with a soft shadow. */
   header nav .nav-sections .default-content-wrapper > ul > li > ul {
     display: none;
-    position: relative;
+    position: absolute;
+    inset: 113px 16px auto;
+    padding: 48px 32px 32px 96px;
+    background-color: #202020;
+    border-radius: 0 0 48px 48px;
+    box-shadow: 0 8px 8px rgb(0 0 0 / 10%);
+    transform: none;
+    visibility: visible;
+    overflow: visible;
+    z-index: 19;
+  }
+
+  /* rows inside desktop panels have no borders */
+  header nav .nav-sections .default-content-wrapper > ul > li > ul li { border-bottom: 0; }
+
+  /* Grey divider after the first "Overview" row, matching the source HR. The
+     first list item is the hidden mobile back-button (.nav-back), so the
+     Overview row is the one directly after it. Applies in the top-level panel
+     AND in the drill-in child columns (each has its own Overview row). */
+  header nav .nav-sections .nav-drop > ul > .nav-back + li,
+  header nav .nav-sections .nav-drop-parent > ul > .nav-back + li {
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid rgb(128 128 128 / 60%);
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='true'] > ul {
+    display: flex;
+    flex-direction: column;
+    align-content: flex-start;
+    gap: 8px;
+    width: 504px; /* source: single link column ~504px */
+
+    /* Reserve space below the last row for the absolutely-positioned
+       "Close Menu" control so it never overlaps the final link (source
+       places it on its own line at the bottom-right of the panel). */
+    padding-bottom: 80px;
+  }
+
+  /* first-level links inside the panel — source: 24px/500, 12px 24px rows,
+     each with a trailing arrow, space-between */
+  /* stylelint-disable-next-line no-descending-specificity */
+  header nav .nav-sections .default-content-wrapper > ul > li > ul > li > a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 12px 24px;
+    border-radius: 48px; /* source: pill-shaped rows */
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 32px;
+    color: #fff;
+    transition: background-color 0.15s ease, color 0.15s ease;
+  }
+
+  /* trailing arrow indicator on every panel row (matches source) */
+  header nav .nav-sections .default-content-wrapper > ul > li > ul > li > a::after {
+    content: '';
+    flex: 0 0 auto;
+    width: 8px;
+    height: 8px;
+    border: 2px solid currentcolor;
+    border-width: 2px 2px 0 0;
+    transform: rotate(45deg);
+  }
+
+  /* Row hover: white pill highlight with black text (source behavior). */
+  /* stylelint-disable-next-line no-descending-specificity */
+  header nav .nav-sections .default-content-wrapper > ul > li > ul a:hover {
+    background-color: #fff;
+    color: #000;
+  }
+
+  /* "Close Menu" — bottom-right of the panel (source) */
+  header nav .nav-close {
     display: block;
     position: absolute;
-    left: -24px;
-    width: 200px;
-    top: 150%;
-    padding: 16px;
-    background-color: var(--light-color);
-    white-space: initial;
+    right: 32px;
+    bottom: 32px;
   }
 
-  header nav .nav-sections .default-content-wrapper > ul > li > ul::before {
+  header nav .nav-close-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    padding: 8px 4px;
+    border: 0;
+    background: transparent;
+    color: #fff;
+    font-family: var(--body-font-family);
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+  header nav .nav-close-button::after {
     content: '';
-    position: absolute;
-    top: -8px;
-    left: 16px;
-    width: 0;
-    height: 0;
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    border-bottom: 8px solid var(--light-color);
+    width: 12px;
+    height: 12px;
+    background: currentcolor;
+    mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke="black" stroke-width="2" fill="none"/></svg>') center / contain no-repeat;
   }
 
-  header nav .nav-sections .default-content-wrapper > ul > li > ul > li {
-    padding: 8px 0;
+  /* drill-in parent: static so its child column anchors to the panel (the
+     top-level absolutely-positioned <ul>), not to the parent row. */
+  header nav .nav-sections .nav-drop-parent { position: static; }
+
+  /* Active parent row: magenta pill highlight (source behavior). Must beat the
+     white row-hover rule, so it also covers :hover and uses the full chain. */
+  /* stylelint-disable-next-line no-descending-specificity */
+  header nav .nav-sections .default-content-wrapper > ul > li > ul > .nav-drop-parent[aria-expanded='true'] > a,
+  header nav .nav-sections .default-content-wrapper > ul > li > ul > .nav-drop-parent[aria-expanded='true'] > a:hover {
+    background-color: var(--color-magenta);
+    color: #fff;
   }
+
+  /* stylelint-disable-next-line no-descending-specificity */
+  header nav .nav-sections .nav-drop-parent > ul {
+    display: none;
+  }
+
+  /* Child column: a second column anchored to the panel, aligned to its top
+     (source: col-1 left 148 + 504 width + 48 gap = col-2 at left 700; top
+     matches the panel's 48px top padding). */
+  /* stylelint-disable-next-line no-descending-specificity */
+  header nav .nav-sections .nav-drop-parent[aria-expanded='true'] > ul {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: absolute;
+    inset: 48px auto auto 648px;
+    padding: 0;
+    width: 504px;
+    transform: none;
+    visibility: visible;
+    overflow: visible;
+  }
+
+  /* stylelint-disable-next-line no-descending-specificity */
+  header nav .nav-sections .nav-drop-parent[aria-expanded='true'] > ul > li > a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 12px 24px;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 32px;
+    color: #fff;
+    white-space: nowrap;
+  }
+
+  /* logo + tools stay above the panel */
+  header .nav-brand,
+  header nav .nav-tools { z-index: 21; }
 }
 
-/* tools */
-header nav .nav-tools {
-  grid-area: tools;
+/* Center the pill once the viewport exceeds the max-width + gutters, matching
+   the hero-video / themed cards' centering breakpoint. */
+@media (width >= 1440px) {
+  header nav {
+    margin: 17px auto;
+  }
 }

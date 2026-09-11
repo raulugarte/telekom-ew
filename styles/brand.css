@@ -1,0 +1,37 @@
+/*
+ * Telekom brand tokens — extracted from https://www.telekom.com/en
+ * TeleNeo is Deutsche Telekom's proprietary brand font (not on Typekit/Google
+ * Fonts); a system sans-serif stack is used as a close fallback.
+ */
+:root {
+  --heading-font-family: "TeleNeo Var", "Helvetica Neue", helvetica, arial, sans-serif;
+  --body-font-family: "TeleNeo Var", "Helvetica Neue", helvetica, arial, sans-serif;
+
+  /* base colors */
+  --background-color: #fff;
+  --text-color: #000;
+  --link-color: #e20074;
+  --link-hover-color: #c10063;
+
+  /* Telekom brand palette */
+  --color-magenta: #e20074;
+  --color-magenta-dark: #c10063;
+  --color-orchid: #a49df1;
+  --color-macaw: #84b0f5;
+  --color-dark: #000;
+  --color-light: #f2f2f2;
+  --color-grey: #dadada;
+
+  /* spacing */
+  --section-padding: 48px;
+  --content-max-width: 1408px;
+  --nav-height: 64px;
+
+  /* heading sizes (desktop) */
+  --heading-size-xxl: 44px;
+  --heading-size-xl: 32px;
+  --heading-size-l: 24px;
+  --heading-size-m: 20px;
+  --heading-size-s: 18px;
+  --heading-size-xs: 16px;
+}

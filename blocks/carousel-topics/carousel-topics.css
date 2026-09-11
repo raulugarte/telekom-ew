@@ -1,0 +1,111 @@
+/*
+ * Carousel Topics block
+ * Source: section.teaser-group inside .teasergroupslider.theme-orchid (telekom.com/en)
+ * A row of white rounded topic cards on the orchid section background.
+ * Each card: image on top (4/3), then heading + text. Multiple visible at once;
+ * horizontal scroll on narrow viewports, 3-up grid on desktop.
+ * Section orchid background + padding come from main .section.orchid in styles.css.
+ */
+
+.carousel-topics {
+  position: relative;
+}
+
+/* --- Track --- */
+.carousel-topics .carousel-topics-track {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 8px; /* source grid gap */
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+}
+
+.carousel-topics .carousel-topics-track::-webkit-scrollbar {
+  display: none;
+}
+
+/* --- Card (item) --- */
+.carousel-topics .carousel-topics-item {
+  flex: 0 0 82%; /* mobile: one card with a peek of the next */
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff; /* source article bg */
+  border-radius: 24px; /* source article border-radius */
+  overflow: hidden;
+}
+
+/* --- Image (top of card, 4/3) --- */
+.carousel-topics .carousel-topics-item-image {
+  line-height: 0;
+  order: -1; /* image above text regardless of source order */
+}
+
+.carousel-topics .carousel-topics-item-image img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3; /* source .teaser__media aspect-ratio */
+  object-fit: cover;
+}
+
+/* --- Body (heading + text) --- */
+.carousel-topics .carousel-topics-item-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+}
+
+.carousel-topics .carousel-topics-item-body h3 {
+  margin: 0;
+  color: #000; /* source #000 (orchid theme uses black text) */
+  font-weight: 700; /* source */
+  font-size: 24px;
+  line-height: 1.15;
+}
+
+.carousel-topics .carousel-topics-item-body p {
+  margin: 0;
+  color: #000;
+  font-weight: 500; /* source */
+  font-size: 18px;
+  line-height: 1.33;
+}
+
+.carousel-topics .carousel-topics-item-body a {
+  color: #000;
+}
+
+/* --- Nav buttons: source shows a static row, no visible controls --- */
+.carousel-topics .carousel-topics-navigation-buttons {
+  display: none;
+}
+
+/* --- Desktop: 3-up grid, larger card padding/typography (source computed values) --- */
+@media (width >= 900px) {
+  .carousel-topics .carousel-topics-track {
+    overflow-x: visible;
+  }
+
+  .carousel-topics .carousel-topics-item {
+    flex: 0 0 calc((100% - 16px) / 3); /* 3 cards, two 8px gaps */
+  }
+
+  .carousel-topics .carousel-topics-item-body {
+    gap: 32px; /* source .teaser__content gap */
+    padding: 48px; /* source .teaser__content padding */
+  }
+
+  .carousel-topics .carousel-topics-item-body h3 {
+    font-size: 32px; /* source h3 */
+    line-height: 36px; /* source */
+  }
+
+  .carousel-topics .carousel-topics-item-body p {
+    font-size: 24px; /* source p */
+    line-height: 32px; /* source */
+  }
+}

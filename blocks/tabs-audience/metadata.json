@@ -1,0 +1,10 @@
+{
+  "variantName": "tabs-audience",
+  "baseBlock": "tabs",
+  "canonicalModel": "tabs",
+  "visualCharacteristics": "Dark-themed audience selector: a horizontal row of tabs (All / Media / Investors / Applicants / Customers), each revealing a panel of teaser cards.",
+  "contentPattern": "One row per tab: first cell is the tab label, the rest is the panel content.",
+  "usage": "Personalisation / audience selector.",
+  "options": [],
+  "memberVariantIds": ["tabs-audience"]
+}

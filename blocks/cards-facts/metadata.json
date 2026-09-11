@@ -1,0 +1,10 @@
+{
+  "variantName": "cards-facts",
+  "baseBlock": "cards",
+  "canonicalModel": "cards",
+  "visualCharacteristics": "Dark-themed grid of statistic items, each with a prominent figure, a label and a short description.",
+  "contentPattern": "Repeating uniform stat items: figure + label + description. Text-focused, images optional.",
+  "usage": "Facts / key statistics about the company.",
+  "options": [],
+  "memberVariantIds": ["cards-facts"]
+}

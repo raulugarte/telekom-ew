@@ -1,3 +1,5 @@
+@import url('brand.css');
+
 /*
  * Copyright 2020 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
@@ -11,70 +13,61 @@
  */
 
 :root {
-  /* colors */
-  --background-color: white;
-  --light-color: #f8f8f8;
-  --dark-color: #505050;
-  --text-color: #131313;
-  --link-color: #3b63fb;
-  --link-hover-color: #1d3ecf;
+  /* colors (brand tokens defined in brand.css) */
+  --background-color: #fff;
+  --light-color: #f2f2f2;
+  --dark-color: #000;
+  --text-color: #000;
+  --link-color: #e20074;
+  --link-hover-color: #c10063;
 
   /* fonts */
-  --body-font-family: roboto, roboto-fallback, sans-serif;
-  --heading-font-family: roboto-condensed, roboto-condensed-fallback, sans-serif;
+  --body-font-family: "TeleNeo Var", teleneo-fallback, "Helvetica Neue", helvetica, arial, sans-serif;
+  --heading-font-family: "TeleNeo Var", teleneo-fallback, "Helvetica Neue", helvetica, arial, sans-serif;
 
   /* body sizes */
-  --body-font-size-m: 22px;
-  --body-font-size-s: 19px;
-  --body-font-size-xs: 17px;
+  --body-font-size-m: 18px;
+  --body-font-size-s: 16px;
+  --body-font-size-xs: 14px;
 
   /* heading sizes */
-  --heading-font-size-xxl: 55px;
-  --heading-font-size-xl: 44px;
-  --heading-font-size-l: 34px;
-  --heading-font-size-m: 27px;
-  --heading-font-size-s: 24px;
-  --heading-font-size-xs: 22px;
+  --heading-font-size-xxl: 36px;
+  --heading-font-size-xl: 28px;
+  --heading-font-size-l: 24px;
+  --heading-font-size-m: 20px;
+  --heading-font-size-s: 18px;
+  --heading-font-size-xs: 16px;
 
   /* nav height */
   --nav-height: 64px;
 }
 
-/* fallback fonts */
+/* fallback font — approximates TeleNeo's metrics with a system sans-serif */
 @font-face {
-  font-family: roboto-condensed-fallback;
-  size-adjust: 88.82%;
-  src: local('Arial');
-}
-
-@font-face {
-  font-family: roboto-fallback;
-  size-adjust: 99.529%;
+  font-family: teleneo-fallback;
+  size-adjust: 100%;
   src: local('Arial');
 }
 
 @media (width >= 900px) {
   :root {
-    /* body sizes */
-    --body-font-size-m: 18px;
-    --body-font-size-s: 16px;
-    --body-font-size-xs: 14px;
-
     /* heading sizes */
-    --heading-font-size-xxl: 45px;
-    --heading-font-size-xl: 36px;
-    --heading-font-size-l: 28px;
-    --heading-font-size-m: 22px;
-    --heading-font-size-s: 20px;
-    --heading-font-size-xs: 18px;
+    --heading-font-size-xxl: 44px;
+    --heading-font-size-xl: 32px;
+    --heading-font-size-l: 24px;
+    --heading-font-size-m: 20px;
+    --heading-font-size-s: 18px;
+    --heading-font-size-xs: 16px;
   }
 }
 
+/* Source page canvas is pure black; colored/charcoal sections float on it
+   as rounded cards. Text on the bare canvas is therefore light. */
 body {
   display: none;
   margin: 0;
-  background-color: var(--background-color);
-  color: var(--text-color);
+  background-color: var(--color-dark);
+  color: #fff;
   font-family: var(--body-font-family);
   font-size: var(--body-font-size-m);
   line-height: 1.6;
@@ -107,8 +100,8 @@ h6 {
   margin-top: 0.8em;
   margin-bottom: 0.25em;
   font-family: var(--heading-font-family);
-  font-weight: 600;
-  line-height: 1.25;
+  font-weight: 800;
+  line-height: 1.15;
   scroll-margin: 40px;
 }
 
@@ -322,4 +315,103 @@ main .section.highlight {
   background-color: var(--light-color);
   margin: 0;
   padding: 40px 0;
+}
+
+/* Telekom theme section variants.
+ * The source page canvas is pure black; every themed section is a rounded
+ * rectangle "card" floating on it (32px radius, inset from the viewport
+ * edges with ~16px gutters, ~48px inner padding). Dark sections are a
+ * charcoal (#202020) card — distinct from the pure-black canvas. */
+main .section.magenta,
+main .section.orchid,
+main .section.macaw,
+main .section.dark:not(.hero-video-container) {
+  max-width: var(--content-max-width);
+  margin: 8px 16px;
+  padding: 48px;
+  border-radius: 32px;
+}
+
+@media (width >= 1440px) {
+  main .section.magenta,
+  main .section.orchid,
+  main .section.macaw,
+  main .section.dark:not(.hero-video-container) {
+    margin: 8px auto;
+  }
+}
+
+/* Let content fill the band's own padding instead of the default 1200px cap. */
+main .section.magenta > div,
+main .section.orchid > div,
+main .section.macaw > div,
+main .section.dark:not(.hero-video-container) > div {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Hero video stage: full-bleed dark section, no card treatment. */
+main .section.dark.hero-video-container {
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-dark);
+  color: #fff;
+}
+
+main .section.dark:not(.hero-video-container) {
+  background-color: #202020; /* charcoal card on the black canvas */
+  color: #fff;
+}
+
+main .section.dark a:any-link,
+main .section.dark a:hover {
+  color: #fff;
+}
+
+main .section.magenta {
+  background-color: var(--color-magenta);
+  color: #fff;
+}
+
+main .section.magenta a:any-link,
+main .section.magenta a:hover {
+  color: #fff;
+}
+
+main .section.orchid {
+  background-color: var(--color-orchid);
+  color: #000;
+}
+
+main .section.orchid a:any-link,
+main .section.orchid a:hover {
+  color: #000;
+}
+
+main .section.macaw {
+  background-color: var(--color-macaw);
+  color: #000;
+}
+
+/* Brand claim ("CONNECTING YOUR WORLD") — a magenta band whose only content is
+   the giant uppercase slogan. Distinguished from the news magenta section
+   (which carries .cards-news-container). Source: each line is a single
+   non-wrapping headline (~19vw, capped 272px, weight 900, uppercase, white)
+   that is intentionally oversized and clipped by the band's hidden overflow. */
+main .section.magenta:not(.cards-news-container) {
+  padding: 48px;
+  overflow: hidden; /* source clips the oversized slogan that bleeds past the edge */
+}
+
+main .section.magenta:not(.cards-news-container) .default-content-wrapper p {
+  margin: 0;
+  color: #fff;
+  font-family: var(--heading-font-family);
+  font-size: min(19vw, 272px); /* source viewport-fluid ratio, capped at 272px */
+  font-weight: 900;
+  line-height: 0.9;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  white-space: nowrap; /* each line stays on one line, mirroring the source */
 }

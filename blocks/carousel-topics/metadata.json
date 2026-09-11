@@ -1,0 +1,10 @@
+{
+  "variantName": "carousel-topics",
+  "baseBlock": "carousel",
+  "canonicalModel": "carousel",
+  "visualCharacteristics": "Orchid-themed horizontal slider of topic teasers; multiple teasers visible at once, each with an image and a heading, with prev/next controls.",
+  "contentPattern": "One row per topic teaser: image + heading.",
+  "usage": "Topics to explore slider.",
+  "options": [],
+  "memberVariantIds": ["carousel-topics"]
+}
