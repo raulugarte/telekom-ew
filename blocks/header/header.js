@@ -263,6 +263,17 @@ export default async function decorate(block) {
       const container = brandLink.closest('.button-container');
       if (container) container.className = '';
     }
+    // The authored nav fragment references the logo with a relative path
+    // (`images/logo.svg`) that is not published, so the browser resolves it to
+    // about:error and exposes the alt text. Point the brand logo at the repo's
+    // served asset (`/icons/logo-white.svg`, the white Telekom 'T'); the alt is
+    // kept for accessibility but is no longer shown as a broken-image fallback.
+    const brandImg = navBrand.querySelector('img');
+    if (brandImg) {
+      brandImg.setAttribute('src', '/icons/logo-white.svg');
+      brandImg.removeAttribute('srcset');
+      if (!brandImg.getAttribute('alt')) brandImg.setAttribute('alt', 'Deutsche Telekom homepage');
+    }
   }
 
   // Turn the ":search:" token (or a decorated .icon-search span) in the tools
